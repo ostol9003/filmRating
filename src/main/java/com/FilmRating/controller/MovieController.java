@@ -59,4 +59,16 @@ public class MovieController {
         return ResponseEntity.noContent().build();
 
     }
+
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id){
+        if(!repository.existById(id)){
+            log.warn("Movie with id:{} -> not found", id);
+           return;
+        }
+        service.deleteById(id);
+        log.info("Movie with id:{} -> deleted", id);
+    }
+
 }

@@ -14,4 +14,5 @@ public interface MovieRepository {
     Movie save(Movie entity);
     Page<Movie> findAll(Pageable page);
     List<Movie> findByTitle(@Param("title") String title);
+    void deleteById(int id);
 }

@@ -14,4 +14,5 @@ interface SqlMovieRepository extends MovieRepository, JpaRepository<Movie, Integ
     @Override
     @Query(nativeQuery = true, value = "select count(*) > 0 from movies where id=:id")
     boolean existById(@Param("id") @NonNull Integer id);
+
 }
