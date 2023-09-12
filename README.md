@@ -15,3 +15,5 @@ It will store films, users, reviews.<br>
 - JUnit
 - H2
 - Postman (request testing)
+- Lombok
+- Flyway
