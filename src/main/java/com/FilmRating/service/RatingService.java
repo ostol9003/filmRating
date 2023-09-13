@@ -2,22 +2,22 @@ package com.FilmRating.service;
 
 import com.FilmRating.model.Movie;
 import com.FilmRating.model.MovieRepository;
+import com.FilmRating.model.Rating;
+import com.FilmRating.model.RatingRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MovieService {
-private final MovieRepository repository;
+public class RatingService {
+private final RatingRepository repository;
 
-    public MovieService(MovieRepository repository) {
+    public RatingService(RatingRepository repository) {
         this.repository = repository;
     }
 
-    public Movie save(Movie toSave){
+    public Rating save(Rating toSave){
         return repository.save(toSave);
     }
     public void deleteById(Integer id){
         repository.deleteById(id);
     }
-
-
 }

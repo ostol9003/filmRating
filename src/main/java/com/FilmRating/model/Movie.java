@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -19,6 +21,9 @@ public class Movie {
 
     private String description;
     private int productionYear;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
+    private Set<Rating> ratings;
 
     public void updateFrom(Movie movieToUpdate) {
     this.title = movieToUpdate.getTitle();
