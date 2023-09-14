@@ -8,6 +8,7 @@ It will store films, users, reviews.<br>
 (add/delete/update/search)
 
 ## Technologies
+
 - Java
 - Spring Boot
 - Hibernate

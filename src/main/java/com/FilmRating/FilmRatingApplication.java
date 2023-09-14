@@ -8,12 +8,12 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @SpringBootApplication
 public class FilmRatingApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FilmRatingApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(FilmRatingApplication.class, args);
+    }
 
-	@Bean
-	LocalValidatorFactoryBean validator() {
-		return new LocalValidatorFactoryBean();
-	}
+    @Bean
+    LocalValidatorFactoryBean validator() {
+        return new LocalValidatorFactoryBean();
+    }
 }
