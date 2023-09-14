@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ import java.net.URI;
 import java.util.List;
 
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/movies")
 public class MovieController {
     private final MovieRepository repository;
@@ -30,8 +31,9 @@ public class MovieController {
         this.ratingRepository = ratingRepository;
     }
 
+
     @GetMapping(params = {"!sort", "!page", "!size"})
-    ResponseEntity<List<Movie>> readAllMovies() {
+    ResponseEntity<List<Movie>> readAllMoviesDto() {
         log.warn("Exposing all the movies!");
         return ResponseEntity.ok(repository.findAll());
     }
@@ -51,26 +53,25 @@ public class MovieController {
 
     @Transactional
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateMovie(@PathVariable int id,@RequestBody @Valid Movie movieToUpdate){
-        if(!repository.existById(id)){
+    public ResponseEntity<?> updateMovie(@PathVariable int id, @RequestBody @Valid Movie movieToUpdate) {
+        if (!repository.existById(id)) {
             log.warn("Movie with id:{} -> not found", id);
             return ResponseEntity.notFound().build();
         }
         repository.findById(id)
-                .ifPresent(movie ->{
+                .ifPresent(movie -> {
                     movie.updateFrom(movieToUpdate);
-                } );
+                });
         log.info("Movie with id:{} -> updated", id);
         return ResponseEntity.noContent().build();
-
     }
 
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id){
-        if(!repository.existById(id)){
+    public void delete(@PathVariable int id) {
+        if (!repository.existById(id)) {
             log.info("Movie with id:{} -> not found", id);
-           return;
+            return;
         }
         service.deleteById(id);
         log.info("Movie with id:{} -> deleted", id);
@@ -78,7 +79,7 @@ public class MovieController {
 
     @ResponseBody
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<List<Rating>>  readAllRatingsFromMovie(@PathVariable int id){
+    ResponseEntity<List<Rating>> readAllRatingsFromMovie(@PathVariable int id) {
         return ResponseEntity.ok(ratingRepository.findAllByMovieId(id));
     }
 }

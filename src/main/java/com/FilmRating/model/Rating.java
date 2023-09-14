@@ -1,14 +1,21 @@
 package com.FilmRating.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+
+@Getter
+@Setter
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "ratings")
 public class Rating {
@@ -16,11 +23,9 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
-
     @NotNull(message = "Film´s rating must not be null.")
-    @Min(value = 1,message = "Rating to low -> scale (1-6)")
-    @Max(value = 6,message = "Rating to high -> scale (1-6)")
+    @Min(value = 1, message = "Rating to low -> scale (1-6)")
+    @Max(value = 6, message = "Rating to high -> scale (1-6)")
     private Short rating;
 
 
@@ -31,6 +36,15 @@ public class Rating {
 
     @ManyToOne
     @JoinColumn(name = "movie_id")
+    @JsonIgnore
     private Movie movie;
+
+
+    public void updateFrom(Rating ratingToUpdate) {
+        this.rating = ratingToUpdate.getRating();
+        this.date = ratingToUpdate.getDate();
+        this.userName = ratingToUpdate.getUserName();
+        this.movie = ratingToUpdate.getMovie();
+    }
 
 }

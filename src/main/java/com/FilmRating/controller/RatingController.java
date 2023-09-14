@@ -1,15 +1,11 @@
 package com.FilmRating.controller;
 
-import com.FilmRating.model.Movie;
-import com.FilmRating.model.MovieRepository;
 import com.FilmRating.model.Rating;
 import com.FilmRating.model.RatingRepository;
-import com.FilmRating.service.MovieService;
 import com.FilmRating.service.RatingService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -49,19 +45,35 @@ public class RatingController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id){
-        if(!repository.existById(id)){
+    public void delete(@PathVariable int id) {
+        if (!repository.existById(id)) {
             log.warn("Movie with id:{} -> not found", id);
-           return;
+            return;
         }
         service.deleteById(id);
         log.info("Movie with id:{} -> deleted", id);
     }
 
     @GetMapping("/{user_name}")
-    ResponseEntity<List<Rating>> readAllByUserName(@PathVariable String user_name){
+    ResponseEntity<List<Rating>> readAllByUserName(@PathVariable String user_name) {
         log.info("Exposing all ratings from user: {}", user_name);
         return ResponseEntity.ok(repository.findByUserName(user_name));
     }
+
+    @Transactional
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateRating(@PathVariable int id, @RequestBody @Valid Rating ratingToUpdate) {
+        if (!repository.existById(id)) {
+            log.warn("Rating with id:{} -> not found", id);
+            return ResponseEntity.notFound().build();
+        }
+        repository.findById(id)
+                .ifPresent(rating -> {
+                    rating.updateFrom(ratingToUpdate);
+                });
+        log.info("Rating with id:{} -> updated", id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
