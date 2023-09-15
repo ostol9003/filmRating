@@ -48,8 +48,8 @@ public class MovieController {
 
 
     @DeleteMapping("/{id}")
-    Optional<List<Movie>> delete(@PathVariable int id) {
-        return service.delete(id);
+    ResponseEntity<?> delete(@PathVariable int id) {
+     return service.delete(id);
     }
 
     @ResponseBody

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -54,14 +53,19 @@ public class MovieService {
                 });
     }
 
-    public Optional<List<Movie>> delete(int id) {
-        repository.findById(id)
-                .ifPresentOrElse(movie -> {
-                            repository.deleteById(id);
-                            log.info("Movie with id:{} -> deleted", id);
-                        },
-                        () -> log.info("Movie with id:{} -> not found", id));
-        return Optional.ofNullable(repository.findAll());
+    public ResponseEntity<?> delete(int id) {
+        return repository.findById(id)
+                .map(movie -> {
+                    log.info("Movie with id:{} -> deleted", id);
+                    repository.deleteById(id);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElseGet(
+                        () -> {
+                            log.info("Movie with id:{} -> not found", id);
+                            return ResponseEntity.notFound().build();
+                        });
+
     }
 
     public ResponseEntity<List<Rating>> readAllRatingsFromMovie(int id) {
