@@ -18,7 +18,7 @@ public interface RatingRepository {
 
     Page<Rating> findAll(Pageable page);
 
-    List<Rating> findByUserName(@Param("user_name") String user_name);
+    Optional<List<Rating>> findAllByUserName(String userName);
 
     List<Rating> findAllByMovieId(Integer id);
 

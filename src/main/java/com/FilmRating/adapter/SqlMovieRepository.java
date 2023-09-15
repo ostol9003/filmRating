@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 interface SqlMovieRepository extends MovieRepository, JpaRepository<Movie, Integer> {
     @Override
-    @Query("SELECT DISTINCT m FROM Movie m JOIN FETCH m.ratings")
+    @Query("SELECT DISTINCT m FROM Movie m left JOIN FETCH m.ratings")
     List<Movie> findAll();
 
     @Override

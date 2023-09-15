@@ -1,23 +1,24 @@
 package com.FilmRating.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import org.springframework.web.service.annotation.GetExchange;
 
 import java.time.LocalDateTime;
-
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "ratings")
 public class Rating {
@@ -38,7 +39,8 @@ public class Rating {
 
     @ManyToOne
     @JoinColumn(name = "movie_id")
-    @JsonIgnore
+    @Getter(AccessLevel.PRIVATE)
+    @Setter(AccessLevel.PUBLIC)
     private Movie movie;
 
 

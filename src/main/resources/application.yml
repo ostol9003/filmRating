@@ -2,8 +2,8 @@ spring:
   profiles:
     active: local
   h2.console:
-    enabled: true
-    path: '/console'
+      enabled: true
+      path: '/console'
 
   main:
     banner-mode: off
