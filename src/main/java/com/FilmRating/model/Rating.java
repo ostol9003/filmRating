@@ -1,8 +1,5 @@
 package com.FilmRating.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -12,7 +9,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.service.annotation.GetExchange;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -31,7 +28,7 @@ public class Rating {
     @Max(value = 6, message = "Rating to high -> scale (1-6)")
     private Short rating;
 
-
+    @DateTimeFormat(pattern = "yy-MM-dd'T'HH:mm")
     private LocalDateTime date;
     @NotBlank(message = "Rating´s user must not be null")
     @Column(name = "user_name")
@@ -42,6 +39,11 @@ public class Rating {
     @Getter(AccessLevel.PRIVATE)
     @Setter(AccessLevel.PUBLIC)
     private Movie movie;
+
+    @Embedded
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Audit audit = new Audit();
 
 
     public void updateFrom(Rating ratingToUpdate) {

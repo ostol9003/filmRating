@@ -8,7 +8,9 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,11 @@ public class Movie {
     private String description;
     private int productionYear;
 
+    @Embedded
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Audit audit = new Audit();
+
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "movie")
     @Fetch(FetchMode.JOIN)
@@ -37,5 +44,6 @@ public class Movie {
         this.title = movieToUpdate.getTitle();
         this.description = movieToUpdate.getDescription();
         this.productionYear = movieToUpdate.getProductionYear();
+        this.ratings = movieToUpdate.getRatings();
     }
 }
