@@ -11,6 +11,7 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,10 +41,18 @@ public class Movie {
     @Getter(AccessLevel.PUBLIC)
     private Set<Rating> ratings;
 
+    @ManyToMany
+    @JoinTable(name = "movie_actor",
+            joinColumns = @JoinColumn (name = "actor_id"),
+            inverseJoinColumns = @JoinColumn (name = "movie_id"))
+    private Set<Actor> actors = new HashSet<>();
+
+
     public void updateFrom(Movie movieToUpdate) {
         this.title = movieToUpdate.getTitle();
         this.description = movieToUpdate.getDescription();
         this.productionYear = movieToUpdate.getProductionYear();
         this.ratings = movieToUpdate.getRatings();
+        this.actors = movieToUpdate.getActors();
     }
 }

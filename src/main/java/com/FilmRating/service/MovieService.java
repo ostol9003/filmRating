@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -29,10 +30,17 @@ public class MovieService {
         return ResponseEntity.ok(repository.findAll());
     }
 
+    public ResponseEntity<Optional<Movie>> readById(int id){
+        log.info("Read movie by id: {}",id);
+        return ResponseEntity.ok(repository.findById(id));
+    }
+
     public ResponseEntity<List<Movie>> readAllMovies(Pageable page) {
         log.info("Custom pageable");
         return ResponseEntity.ok(repository.findAll(page).getContent());
     }
+
+
 
     public ResponseEntity<Movie> createMovie(Movie toCreate) {
         Movie result = repository.save(toCreate);

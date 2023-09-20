@@ -6,17 +6,17 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-public interface MovieRepository {
+public interface ActorRepository {
 
-    List<Movie> findAll();
+    List<Actor> findAll();
 
-    Optional<Movie> findById(Integer id);
+    Optional<Actor> findById(Integer id);
 
     boolean existById(Integer id);
 
-    Movie save(Movie entity);
+    Actor save(Actor entity);
 
-    Page<Movie> findAll(Pageable page);
+    Page<Actor> findAll(Pageable page);
 
     void deleteById(int id);
 

@@ -34,6 +34,10 @@ public class MovieController {
     ResponseEntity<List<Movie>> readAllMovies(Pageable page) {
         return service.readAllMovies(page);
     }
+    @GetMapping("/{id}")
+    ResponseEntity<Optional<Movie>> readById(@PathVariable int id) {
+        return service.readById(id);
+    }
 
     @PostMapping
     ResponseEntity<Movie> createMovie(@RequestBody @Valid Movie toCreate) {
@@ -53,7 +57,7 @@ public class MovieController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/ratings/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<Rating>> readAllRatingsFromMovie(@PathVariable int id) {
         return service.readAllRatingsFromMovie(id);
     }
