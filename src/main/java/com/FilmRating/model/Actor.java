@@ -2,14 +2,10 @@ package com.FilmRating.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,6 +29,11 @@ public class Actor {
 
     @ManyToMany(mappedBy = "actors")
     private Set<Movie> movies = new HashSet<>();
+
+    @Embedded
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Audit audit = new Audit();
 
     public void updateFrom(Actor toUpdate) {
         this.name = toUpdate.getName();

@@ -1,6 +1,7 @@
 package com.FilmRating.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,5 +25,10 @@ public class MovieActor {
     @ManyToOne
     @JoinColumn(name = "actor_id")
     private Actor actorId;
+
+    @Embedded
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Audit audit = new Audit();
 
 }
